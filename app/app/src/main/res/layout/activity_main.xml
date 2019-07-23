@@ -1,73 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/backdesign"
     tools:context=".MainActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Task Manager"
+        android:layout_marginBottom="50dp"
+        android:fontFamily="casual"
         android:gravity="center"
         android:padding="20dp"
-        android:textSize="30sp"
-        android:fontFamily="casual"
-        android:layout_marginBottom="50dp"
-        />
+        android:text="Task Manager"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|clip_horizontal"
+            android:gravity="center"
+            android:text="Log In"
+            android:textAppearance="?android:textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/email_login"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_margin="10dp"
+            android:hint="Email:"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/password_login"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|clip_horizontal"
+            android:layout_margin="10dp"
+            android:hint="Password:"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_margin="10dp"
+            android:background="@android:color/holo_green_dark"
+            android:gravity="center"
+            android:text="Log In"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#fff" />
+    </LinearLayout>
 
     <TextView
+        android:id="@+id/signup_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Log In"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:gravity="center"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="Email:"
-        android:inputType="textEmailAddress"
-        android:id="@+id/email_login"
-        />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="Password:"
-        android:inputType="textPassword"
-        android:id="@+id/password_login"
-        />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Log In"
-        android:id="@+id/login_btn"
-        android:textAppearance="?android:textAppearanceMedium"
-        />
-    
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Don't have account? Sign up for free"
         android:gravity="center"
         android:padding="7dp"
-        android:id="@+id/signup_text"
-        android:textAppearance="?android:textAppearanceSmall"
-        />
+        android:text="Don't have account? Sign up for free"
+        android:textAppearance="?android:textAppearanceSmall" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center|bottom"
-        android:text="Build By: GauravGupta 2019"
         android:padding="5dp"
-        android:textSize="12sp"/>
+        android:text="Build By: GauravGupta 2019"
+        android:textSize="12sp" />
 
 </LinearLayout>
