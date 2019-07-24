@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".RegistrationActivity"
     android:orientation="vertical"
     android:background="@drawable/backdesign"
-    tools:context=".MainActivity">
+    android:gravity="center">
 
     <TextView
         android:layout_width="match_parent"
@@ -27,11 +29,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|clip_horizontal"
             android:gravity="center"
-            android:text="Log In"
+            android:text="Sign up"
             android:textAppearance="?android:textAppearanceLarge" />
 
         <EditText
-            android:id="@+id/email_login"
+            android:id="@+id/username_signup"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center"
+            android:layout_margin="10dp"
+            android:hint="Username:"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/email_signup"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center"
@@ -40,7 +51,7 @@
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/password_login"
+            android:id="@+id/password_signup"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center|clip_horizontal"
@@ -49,14 +60,14 @@
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/login_btn"
+            android:id="@+id/signup_btn"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center"
             android:layout_margin="10dp"
             android:background="@android:color/holo_green_dark"
             android:gravity="center"
-            android:text="Log In"
+            android:text="Register"
             android:textAppearance="?android:textAppearanceMedium"
             android:textColor="#fff" />
     </LinearLayout>
@@ -67,7 +78,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="7dp"
-        android:text="Don't have account? Sign up for free"
+        android:text="Already have an account? Login"
         android:textAppearance="?android:textAppearanceSmall" />
 
     <TextView
