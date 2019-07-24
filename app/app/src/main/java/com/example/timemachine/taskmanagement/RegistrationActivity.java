@@ -87,8 +87,12 @@ public class RegistrationActivity extends AppCompatActivity {
                             mDatabase.child("Users").child(id).setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    mProgress.dismiss();
-                                    startActivity(new Intent(RegistrationActivity.this, HomeActivity.class));
+                                    if(task.isSuccessful()){
+                                        mProgress.dismiss();
+                                        startActivity(new Intent(RegistrationActivity.this, HomeActivity.class));
+                                    }else {
+                                        Toast.makeText(getApplicationContext(), "Problem Occur", Toast.LENGTH_LONG).show();
+                                    }
                                 }
                             });
                         }else {
