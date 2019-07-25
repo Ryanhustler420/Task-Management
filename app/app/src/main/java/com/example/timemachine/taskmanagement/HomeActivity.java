@@ -1,5 +1,6 @@
 package com.example.timemachine.taskmanagement;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -73,7 +75,6 @@ public class HomeActivity extends AppCompatActivity {
                 View v = inflater.inflate(R.layout.custom_input_field, null);
                 myDialog.setView(v);
                 final AlertDialog dialog = myDialog.create();
-
                 final EditText title = v.findViewById(R.id.edt_title);
                 final EditText note = v.findViewById(R.id.edt_note);
 
@@ -118,6 +119,28 @@ public class HomeActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                // Minimize the app if this treated as last in the stack, which could be possible!
+                Intent resIntent = getIntent();
+                String previousActivity = resIntent.getStringExtra("FROM");
+                if(previousActivity.equals("Login")) {
+                    minimizeApp();
+                }
+                return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void minimizeApp() {
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
     }
 
     @Override

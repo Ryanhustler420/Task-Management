@@ -32,10 +32,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Check Current User And Delegate to HomeActivity Accordingly
         // Fire base related
         mAuth = FirebaseAuth.getInstance();
-        mProgress = new ProgressDialog(this);
+        mProgress = new ProgressDialog(MainActivity.this);
+
+        mProgress.setMessage("Please wait...");
+        mProgress.show();
 
         signup_text = findViewById(R.id.signup_text);
 
@@ -85,5 +87,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Check Current User And Delegate to HomeActivity Accordingly
+        if(mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class).putExtra("FROM", "Login"));
+            if(mProgress.isShowing()) mProgress.dismiss();
+        } else {
+            if(mProgress.isShowing()) mProgress.dismiss();
+            Toast.makeText(getApplicationContext(), "Please Login", Toast.LENGTH_LONG).show();
+        }
     }
 }
