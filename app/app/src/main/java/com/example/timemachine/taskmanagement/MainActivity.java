@@ -1,12 +1,14 @@
 package com.example.timemachine.taskmanagement;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -74,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
                 mAuth.signInWithEmailAndPassword(mEmail, mPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        // Check if no view has focus:
+                        View view = getCurrentFocus();
+                        if (view != null) {
+                            // Hiding the Soft Keyboard Forcefully. Not A Best Practice. || TODO: REFACTOR THIS LATER
+                            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                        }
                         if(task.isSuccessful()){
                             Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_LONG).show();
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));

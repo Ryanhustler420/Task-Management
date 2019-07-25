@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         mProgress = new ProgressDialog(this);
-        mProgress.setMessage("Loading...");
+        mProgress.setMessage("Loading Tasks...");
         mProgress.show();
 
         mAuth = FirebaseAuth.getInstance();
@@ -165,7 +167,17 @@ public class HomeActivity extends AppCompatActivity {
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setNote(model.getNote());
                 viewHolder.setDate(model.getDate());
-                if(mProgress.isShowing()) mProgress.dismiss();
+            }
+
+            @Override
+            public int getItemCount() {
+                if(mProgress.isShowing()) {
+                    mProgress.dismiss();
+                }
+                if(super.getItemCount() > 0) {
+                    Toast.makeText(getApplicationContext(), super.getItemCount() + " Task(s) Available", Toast.LENGTH_SHORT).show();
+                }
+                return super.getItemCount();
             }
         };
 
@@ -195,5 +207,22 @@ public class HomeActivity extends AppCompatActivity {
             TextView mDate = v.findViewById(R.id.date);
             mDate.setText(date);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout:
+                mAuth.signOut();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
