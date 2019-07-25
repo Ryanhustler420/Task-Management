@@ -5,6 +5,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -31,6 +33,9 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
 
+    // recycler view
+    private RecyclerView recycler_view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +46,16 @@ public class HomeActivity extends AppCompatActivity {
         String random_uid =  mUser.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("TaskNote").child(random_uid);
 
+        // recycler view grabbing
+        recycler_view = findViewById(R.id.recycler);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+
+        layoutManager.setStackFromEnd(true);
+        layoutManager.setReverseLayout(true);
+
+        recycler_view.setHasFixedSize(true);
+        recycler_view.setLayoutManager(layoutManager);
 
         toolbar = findViewById(R.id.toolbar_home);
         setSupportActionBar(toolbar);

@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Check Current User And Delegate to HomeActivity Accordingly
         // Fire base related
         mAuth = FirebaseAuth.getInstance();
         mProgress = new ProgressDialog(this);
