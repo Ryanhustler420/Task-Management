@@ -11,14 +11,15 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        
+
         <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="56dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recycler">
 
         </android.support.v7.widget.RecyclerView>
-        
+
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="match_parent"
@@ -26,8 +27,16 @@
             android:layout_margin="20dp"
             app:fabSize="normal"
             android:src="@drawable/add_task"
-            android:backgroundTint="@color/center"
             android:id="@+id/fab_btn"
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="20dp"
+            app:fabSize="normal"
+            android:src="@drawable/cancel"
+            android:id="@+id/fab_btn2"
             android:layout_height="wrap_content" />
 
     </android.support.design.widget.CoordinatorLayout>

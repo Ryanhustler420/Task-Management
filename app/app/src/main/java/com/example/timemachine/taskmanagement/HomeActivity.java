@@ -1,5 +1,6 @@
 package com.example.timemachine.taskmanagement;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.timemachine.taskmanagement.Model.Data;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+    private ProgressDialog mProgress;
 
     // recycler view
     private RecyclerView recycler_view;
@@ -44,11 +47,16 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        mProgress = new ProgressDialog(this);
+        mProgress.setMessage("Loading...");
+        mProgress.show();
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
         String random_uid =  mUser.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("TaskNote").child(random_uid);
 
+        mDatabase.keepSynced(true);
         // recycler view grabbing
         recycler_view = findViewById(R.id.recycler);
 
@@ -69,7 +77,6 @@ public class HomeActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "add new task", Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder myDialog = new AlertDialog.Builder(HomeActivity.this);
                 LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
                 View v = inflater.inflate(R.layout.custom_input_field, null);
@@ -146,6 +153,23 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        FirebaseRecyclerAdapter<Data, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(
+                Data.class,
+                R.layout.item_data,
+                MyViewHolder.class,
+                mDatabase
+        ) {
+            @Override
+            protected void populateViewHolder(MyViewHolder viewHolder, Data model, int position) {
+                viewHolder.setTitle(model.getTitle());
+                viewHolder.setNote(model.getNote());
+                viewHolder.setDate(model.getDate());
+                if(mProgress.isShowing()) mProgress.dismiss();
+            }
+        };
+
+        recycler_view.setAdapter(adapter);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

@@ -15,7 +15,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="New Task"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:gravity="center"
@@ -27,17 +27,18 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:text="Title"
+                        android:gravity="center"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:layout_margin="10dp" />
 
@@ -46,13 +47,13 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_weight="3"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="12dp"
                         android:id="@+id/edt_title"
-                        android:textColor="@android:color/black"
+                        android:padding="12dp"
                     />
                 </RelativeLayout>
 
@@ -60,17 +61,18 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:text="Note"
+                        android:gravity="center"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:layout_margin="10dp" />
 
@@ -79,13 +81,13 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_weight="3"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="12dp"
                         android:id="@+id/edt_note"
-                        android:textColor="@android:color/black"
+                        android:padding="12dp"
                         />
                 </RelativeLayout>
 
@@ -93,12 +95,13 @@
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
                 android:background="@drawable/button_design"
                 android:textColor="@android:color/white"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:text="Save"
+                android:padding="16dp"
                 android:id="@+id/btn_save"
             />
 

@@ -5,9 +5,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="7dp"
-    app:cardElevation="10dp"
-    app:cardUseCompatPadding="true"
-    android:elevation="10dp">
+    app:cardElevation="6dp"
+    android:elevation="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,14 +16,14 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="25 July 2019"
-                android:padding="7dp"
-                android:textAppearance="?android:textAppearanceMedium"
+                android:padding="10dp"
+                android:textAppearance="?android:textAppearanceSmall"
                 android:textColor="@android:color/background_dark"
                 android:id="@+id/date"
                 />
@@ -34,7 +33,7 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_weight="2"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
                 android:layout_width="match_parent"
@@ -58,7 +57,7 @@
                 android:maxLines="2"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textColor="@android:color/background_dark"
-                android:padding="10dp"/>
+                android:padding="10dp" />
 
         </RelativeLayout>
 
