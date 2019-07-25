@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -80,11 +81,14 @@ public class RegistrationActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            // check current users id
+
+                            FirebaseUser mUser = mAuth.getCurrentUser();
+                            String uId = mUser.getUid();
                             Toast.makeText(getApplicationContext(), "Successfully Account Created", Toast.LENGTH_SHORT).show();
                             // add additional fields related to user,
-                            String id = mDatabase.push().getKey();
-                            User newUser = new User(mUsername,mEmail,id);
-                            mDatabase.child("Users").child(id).setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            User newUser = new User(mUsername,mEmail,uId);
+                            mDatabase.child("Users").child(uId).setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
