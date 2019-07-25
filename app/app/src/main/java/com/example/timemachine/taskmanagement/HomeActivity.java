@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.timemachine.taskmanagement.Model.Data;
@@ -117,5 +118,35 @@ public class HomeActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+        View v;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            v = itemView;
+        }
+
+        public void setTitle(String title) {
+            TextView mTitle = v.findViewById(R.id.title);
+            mTitle.setText(title);
+        }
+
+        public void setNote(String note) {
+            TextView mNote = v.findViewById(R.id.note);
+            mNote.setText(note);
+        }
+
+        public void setDate(String date) {
+            TextView mDate = v.findViewById(R.id.date);
+            mDate.setText(date);
+        }
     }
 }
