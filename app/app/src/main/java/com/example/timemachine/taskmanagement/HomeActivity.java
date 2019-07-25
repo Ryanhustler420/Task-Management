@@ -40,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private ProgressDialog mProgress;
+    private Boolean listCreated = false;
 
     // recycler view
     private RecyclerView recycler_view;
@@ -155,7 +156,13 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if(!listCreated) {
+            initTaskList();
+        }
+    }
 
+    private void initTaskList() {
+        listCreated = true;
         FirebaseRecyclerAdapter<Data, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(
                 Data.class,
                 R.layout.item_data,
