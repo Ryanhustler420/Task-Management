@@ -1,5 +1,6 @@
 package com.example.timemachine.taskmanagement;
 
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,14 +13,34 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.timemachine.taskmanagement.Model.Data;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.DateFormat;
+import java.util.Date;
+
 public class HomeActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private FloatingActionButton fab;
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        String random_uid =  mUser.getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("TaskNote").child(random_uid);
+
 
         toolbar = findViewById(R.id.toolbar_home);
         setSupportActionBar(toolbar);
@@ -30,40 +51,55 @@ public class HomeActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Toast.makeText(getApplicationContext(), "add new task", Toast.LENGTH_SHORT).show();
-            AlertDialog.Builder myDialog = new AlertDialog.Builder(HomeActivity.this);
-            LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
-            View v = inflater.inflate(R.layout.custom_input_field, null);
-            myDialog.setView(v);
-            AlertDialog dialog = myDialog.create();
+                Toast.makeText(getApplicationContext(), "add new task", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder myDialog = new AlertDialog.Builder(HomeActivity.this);
+                LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
+                View v = inflater.inflate(R.layout.custom_input_field, null);
+                myDialog.setView(v);
+                final AlertDialog dialog = myDialog.create();
 
-            final EditText title = v.findViewById(R.id.edt_title);
-            final EditText note = v.findViewById(R.id.edt_note);
+                final EditText title = v.findViewById(R.id.edt_title);
+                final EditText note = v.findViewById(R.id.edt_note);
 
-            Button btnSave = v.findViewById(R.id.btn_save);
+                Button btnSave = v.findViewById(R.id.btn_save);
 
-            btnSave.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String mTitle = title.getText().toString().trim();
-                    String mNote = note.getText().toString().trim();
+                btnSave.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String mTitle = title.getText().toString().trim();
+                        String mNote = note.getText().toString().trim();
 
-                    if(TextUtils.isEmpty(mTitle)) {
-                        title.setError("Add Title");
-                        return;
+                        if(TextUtils.isEmpty(mTitle)) {
+                            title.setError("Add Title");
+                            return;
+                        }
+
+                        if(TextUtils.isEmpty(mNote)){
+                            note.setError("Add Description");
+                            return;
+                        }
+
+                        // Field Checked Successfully Not Perform Fire base actions
+
+                        String id = mDatabase.push().getKey();
+                        String date = DateFormat.getDateInstance().format(new Date());
+                        Data data = new Data(mTitle,mNote,date,id);
+                        mDatabase.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(getApplicationContext(), "Data has been inserted", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Problem occur!", Toast.LENGTH_LONG).show();
+                                    dialog.dismiss();
+                                }
+                            }
+                        });
                     }
+                });
 
-                    if(TextUtils.isEmpty(mNote)){
-                        note.setError("Add Description");
-                        return;
-                    }
-
-                    // Field Checked Successfully Not Perform Fire base actions
-
-                }
-            });
-
-            dialog.show();
+                dialog.show();
             }
         });
     }
