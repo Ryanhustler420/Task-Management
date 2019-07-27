@@ -162,7 +162,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initTaskList() {
-        listCreated = true;
         FirebaseRecyclerAdapter<Data, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(
                 Data.class,
                 R.layout.item_data,
@@ -174,6 +173,13 @@ public class HomeActivity extends AppCompatActivity {
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setNote(model.getNote());
                 viewHolder.setDate(model.getDate());
+
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        updateData();
+                    }
+                });
             }
 
             @Override
@@ -182,13 +188,26 @@ public class HomeActivity extends AppCompatActivity {
                     mProgress.dismiss();
                 }
                 if(super.getItemCount() > 0) {
-                    Toast.makeText(getApplicationContext(), super.getItemCount() + " Task(s) Available", Toast.LENGTH_SHORT).show();
+                    if(!listCreated){
+                        Toast.makeText(getApplicationContext(), super.getItemCount() + " Task(s) Available", Toast.LENGTH_SHORT).show();
+                    }
+                    listCreated = true;
                 }
                 return super.getItemCount();
             }
         };
-
         recycler_view.setAdapter(adapter);
+    }
+
+    public void updateData() {
+        AlertDialog.Builder myDialog = new AlertDialog.Builder(HomeActivity.this);
+        LayoutInflater inflater = LayoutInflater.from(HomeActivity.this);
+
+        View myView = inflater.inflate(R.layout.update_input_field, null);
+        myDialog.setView(myView);
+
+        AlertDialog dialog = myDialog.create();
+        dialog.show();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
