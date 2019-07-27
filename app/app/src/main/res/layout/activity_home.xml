@@ -28,6 +28,7 @@
             app:fabSize="normal"
             android:src="@drawable/add_task"
             android:id="@+id/fab_btn"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:layout_height="wrap_content" />
 
         <android.support.design.widget.FloatingActionButton
