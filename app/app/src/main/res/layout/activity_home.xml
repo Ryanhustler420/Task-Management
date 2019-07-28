@@ -37,7 +37,7 @@
             android:layout_margin="20dp"
             app:fabSize="normal"
             android:src="@drawable/cancel"
-            android:id="@+id/fab_btn2"
+            android:id="@+id/fab_btn_cancel"
             android:layout_height="wrap_content" />
 
     </android.support.design.widget.CoordinatorLayout>

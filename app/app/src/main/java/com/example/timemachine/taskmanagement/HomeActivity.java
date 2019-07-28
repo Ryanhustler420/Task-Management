@@ -36,7 +36,7 @@ import java.util.Date;
 public class HomeActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
-    private FloatingActionButton fab;
+    private FloatingActionButton fab, cancel;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private ProgressDialog mProgress;
@@ -44,6 +44,18 @@ public class HomeActivity extends AppCompatActivity {
 
     // recycler view
     private RecyclerView recycler_view;
+
+    // Update input field...
+    private EditText titleUp;
+    private EditText noteUp;
+    private Button btnDeleteUp;
+    private Button btnUpdateUp;
+
+    // Variables
+
+    private String title;
+    private String note;
+    private String post_Key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +88,15 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Taskmanager.io");
 
         fab = findViewById(R.id.fab_btn);
+        cancel = findViewById(R.id.fab_btn_cancel);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Cancle Searched For Gamharia", Toast.LENGTH_LONG).show();
+            }
+        });
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,7 +190,7 @@ public class HomeActivity extends AppCompatActivity {
                 mDatabase
         ) {
             @Override
-            protected void populateViewHolder(MyViewHolder viewHolder, Data model, int position) {
+            protected void populateViewHolder(MyViewHolder viewHolder, final Data model, final int position) {
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setNote(model.getNote());
                 viewHolder.setDate(model.getDate());
@@ -177,6 +198,11 @@ public class HomeActivity extends AppCompatActivity {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        post_Key = getRef(position).getKey();
+                        title = model.getTitle();
+                        note = model.getNote();
+
                         updateData();
                     }
                 });
@@ -206,7 +232,52 @@ public class HomeActivity extends AppCompatActivity {
         View myView = inflater.inflate(R.layout.update_input_field, null);
         myDialog.setView(myView);
 
-        AlertDialog dialog = myDialog.create();
+        final AlertDialog dialog = myDialog.create();
+
+        titleUp = myView.findViewById(R.id.edt_title_update);
+        noteUp = myView.findViewById(R.id.edt_note_update);
+
+        titleUp.setText(title);
+        titleUp.setSelection(title.length());
+
+        noteUp.setText(note);
+        noteUp.setSelection(note.length());
+
+        btnDeleteUp = myView.findViewById(R.id.btn_delete_update);
+        btnUpdateUp = myView.findViewById(R.id.btn_update);
+
+        btnUpdateUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                title = titleUp.getText().toString().trim();
+                note = noteUp.getText().toString().trim();
+
+                String mDate = DateFormat.getDateInstance().format(new Date());
+                if(TextUtils.isEmpty(title)) {
+                    titleUp.setError("Fill Title");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(note)){
+                    noteUp.setError("Fill Note");
+                    return;
+                }
+
+                Data data = new Data(title,note,mDate,post_Key);
+                mDatabase.child(post_Key).setValue(data);
+
+                dialog.dismiss();
+            }
+        });
+
+        btnDeleteUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDatabase.child(post_Key).removeValue();
+                dialog.dismiss();
+            }
+        });
+
         dialog.show();
     }
 
